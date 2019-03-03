@@ -1,96 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        #box{
-            width: 600px;
-            height: 600px;
-            /* border: 3px solid; */
+        #box {
             position: relative;
-            margin: 30% auto;
-            /* perspective: 1200px; */
-            transform-style: preserve-3d;
-            /* perspective-origin: 0% 20%; */
-            animation: rotate 10s ease infinite;
+            width: 700px;
+            height: 500px;
+            margin: 10% auto;
+            /* perspective-origin: 10% 60%; */
+            perspective: 1000px;
         }
 
-        #box div{
+        .side {
             width: 100%;
             height: 100%;
             position: absolute;
-            transition-duration: 1s;
-            opacity: 0.5;
-            perspective: 1200px;
-            line-height: 600px;
-            text-align: center;
-            color: #fff;
-            font-size: 200px;
+            /* opacity: 0.3; */
+            transform-style: preserve-3d;
+            perspective: 700px;
+            transition-duration: 2s;
+            transition-timing-function: ease-out;
+            perspective-origin: 50% 30%;
+            backface-visibility: hidden;
+            box-shadow: 0 0 20px black;
         }
 
-        .top{
-            transform: rotateX(-90deg) translateZ(300px);
-            background-color: bisque;
+        .side img {
+            width: 100%;
+            height: 100%;
         }
-        .bottom{
-            transform: rotateX(90deg) translateZ(300px);
-            background-color: brown;
+
+        .top {
+            background-color: red;
         }
-        .left{
-            transform: rotateY(-90deg) translateZ(300px);
-            background-color: chartreuse;
-        }
-        .right{
-            transform: rotateY(90deg) translateZ(300px);
-            background-color: blue;
-        }
-        .front{
-            transform:translateZ(300px);
+
+        .bottom {
             background-color: green;
         }
-        .back{
-            transform: translateZ(-300px);
-            background-color: pink;
+
+        .front {
+            background-color: blue;
         }
 
-        @keyframes rotate{
-            0%{
-                transform: rotateX(0) rotateY(0) rotateZ(0);
-            }
-            100%{
-                transform: rotateX(720deg) rotateY(720deg) rotateZ(720deg);
-            }
+        .back {
+            background-color: goldenrod;
         }
     </style>
 </head>
+
 <body>
     <div id="box">
-        <div class="top">1</div>
-        <div class="front">2</div>
-        <div class="bottom">3</div>
-        <div class="back">4</div>
-        <div class="left">5</div>
-        <div class="right">6</div>
+        <div class="side front"><img src="image/girl.jpg"></div>
+        <div class="side bottom"><img src="image/pink.png"></div>
+        <div class="side back"><img src="image/win10.jpg"></div>
+        <div class="side top"><img src="image/sonwView.png"></div>
     </div>
 
     <button id="btn">click</button>
 
     <script>
+        var div = document.querySelectorAll('#box div');
+        var btn = document.querySelector('#btn');
+
+
+        //初始化图片状态
         var deg = 0;
-       
-        btn.onclick = function(){
-            var top = document.querySelector('.top');
-            var front = document.querySelector('.front');
-            var bottom = document.querySelector('.bottom');
-            var back = document.querySelector('.back');
-            top.className = 'front';
-            front.className = 'bottom';
-            bottom.className = 'back';
-            back.className = 'top';
+        (function () {
+            for (var i = 0; i < div.length; i++) {
+                div[i].style.transform = 'rotateX(' + deg + 'deg) translateZ(' + 250 + 'px)';
+                div[i].deg = deg;
+                deg -= 90;
+            }
+        })();
+
+
+
+        btn.onclick = function () {
+            for (var i = 0; i < div.length; i++) {
+                var deg = div[i].deg - 90;
+                div[i].style.transform = 'rotateX(' + deg + 'deg) translateZ(' + 250 + 'px)';
+                div[i].deg = deg;
+            }
         }
     </script>
+
 </body>
+
 </html>
