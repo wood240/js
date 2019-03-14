@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrapper {
+            width: 600px;
+            height: 250px;
+            margin: 100px auto;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        #wrapper img{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            perspective: 600px;
+            box-shadow: 0 5px 10px black;
+            transition: all .6s ease;
+        }
+
+        .i1{
+            transform: translateX(-300px) translateZ(-100px);
+        }
+        .i2{
+            transform: translateX(0px) translateZ(100px) scale(1.3);
+            transform-origin: 50% 100%;
+        }
+        .i3{
+            transform: translateX(300px) translateZ(-100px);
+        }
+        .i4{
+            transform: translateX(0px) translateZ(-200px);
+        }
+        .i5{
+            transform: translateX(0px) translateZ(-200px);
+        }
+
+        .dir{
+            position: absolute;
+            z-index: 100;
+            width: 30%;
+            height: 100%;
+            background-color: rgba(0,0,0,.5);
+        }
+        
+        .dir:hover{
+            cursor: pointer;
+        }
+
+        .left {
+            left: -300px;
+            background: url('./icon/left.png') no-repeat;
+            background-position: center;
+        }
+        .right {
+            right: -300px;
+            background: url('./icon/right.png') no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <img src="./image/Wall_of_Three.png" class="i1">
+        <img src="./image/endless-hills-picjumbo-com.jpg" class="i2">
+        <img src="./image/little-skier-on-a-ski-lift-picjumbo-com.jpg" class="i3">
+        <img src="./image/stunning-golden-gate-bridge-at-the-evening-sunset-picjumbo-com.jpg" class="i4">
+        <img src="./image/wallhaven-497327.png" class="i5">
+        <span class="dir left"></span>
+        <span class="dir right"></span>
+    </div>
+
+    <script>
+        var img = document.querySelectorAll("#wrapper img")
+        var wrapper = document.querySelector("#wrapper")
+        var classes = []
+        var btn = document.querySelector('#btn')
+
+        for(var i = 0;i<img.length;i++){
+            classes[i] = img[i].className
+        }
+
+        wrapper.addEventListener('click', function(e){
+            var targer = e.target;
+            if(targer.classList.contains('left')){
+                classes.unshift(classes[classes.length-1])
+                classes.pop()
+            }else if(targer.classList.contains('right')){
+                classes.push(classes[0])
+                classes.shift()
+            }
+
+            for(var i = 0;i<img.length;i++){
+                img[i].className = classes[i]
+            }
+        })
+     </script>
+</body>
+</html>
